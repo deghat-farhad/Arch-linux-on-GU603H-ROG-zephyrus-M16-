@@ -22,3 +22,6 @@ Powertop:
 Running sudo powertop --autotune can improve battery life. If you run sudo powertop and go to tunables tab, you would see some options marked as bad. powertop autotune fixes them, but needs to be run every time you reboot. To fix this, create a script in ~/.config/autostart or any other location of your choice, make it executable by running chmod +x /path/to/script and add it to login scripts in kde settings.
 
 https://raphtlw.medium.com/guide-to-installing-arch-on-zephyrus-g14-21b93d2e9f49
+
+
+persianfonts: https://wiki.archlinux.org/title/Font_configuration/Examples#Arabic
