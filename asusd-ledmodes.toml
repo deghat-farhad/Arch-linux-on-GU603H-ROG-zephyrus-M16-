@@ -1,0 +1,6 @@
+[[led_data]]
+prod_family = "ROG Zephyrus M16"
+board_names = ["GU603HM"]
+standard = ["Static", "Breathe", "Pulse", "Strobe"]
+multizone = []
+per_key = false
