@@ -43,20 +43,110 @@ Then, update the hwdb:
 $ sudo systemd-hwdb update
 $ sudo udevadm trigger
 ```
+#### asusctl
+I installed [asusctl](https://aur.archlinux.org/packages/asusctl) mostly for enabling AURA keyboard backlight and the ability to change performance profiles:
 
-# to be organized
-telegram scaling kde: Exec=env QT_SCREEN_SCALE_FACTORS=1 telegram-desktop -- %u
-telegram tray icon: https://wiki.archlinux.org/title/KDE#Blurry_icons_in_system_tray
-
+###### performance profiles:
+map
+```
 asusctl change profile: asusctl profile -n
-asusctl change keyboard backlight mode: asusctl led-mode -n
+```
+into `FN+F5` to make this key functional.
 
-AURA: /etc/asusd/asusd-ledmodes.toml  /etc/asusd/aura.conf
 
+###### AURA:
+edit `asusd-ledmodes.toml`:
+```
+$ sudo nano /etc/asusd/asusd-ledmodes.toml
+```
+and add ROG Zephyrus M16 `led_data` from [asusd-ledmodes.toml](./asusd-ledmodes.toml)  into it.
+remove `aura.conf`:
+```
+$ sudo rm /etc/asusd/aura.conf
+```
+restart `asusd.service`
+```
+$ sudo systemctl restart asusd.service
+```
+now you can modify keyboard backlight in `rog-control-center`
+
+you can also map
+```
+$ asusctl led-mode -n
+```
+into  `FN+F4` to make this key functional.
+
+#### tray icon quality
+As mentioned in https://wiki.archlinux.org/title/KDE#Blurry_icons_in_system_tray, to fix blurry tray icons install [libappindicator-gtk3](https://archlinux.org/packages/?name=libappindicator-gtk3)
+
+#### blurry telegram desktop in kde while using scaling
+edit `telegramdesktop.desktop`
+```
+$ sudo nano /usr/share/applications/telegramdesktop.desktop
+```
+and change `Exec` line into
+```
+Exec=env QT_SCREEN_SCALE_FACTORS=1 telegram-desktop -- %u
+```
+to bypass kde scaling feature just for telegram desktop.
+
+#### better font for persian language
+Install your desired persian font (IRANSansWeb in this example)  
+  
+edit `fonts.conf`
+```
+$ sudo nano /etc/fonts/fonts.conf
+```
+add
+```xml
+<!-- Default font for the Persian language (no fc-match pattern) -->
+	<match>
+		<test compare="contains" name="lang">
+			<string>fa</string>
+		</test>
+		<edit mode="prepend" name="family">
+			<string>IRANSansWeb</string>
+		</edit>
+	</match>
+```
+and
+```xml
+<!-- Fallback fonts preference order -->
+	<alias>
+		<family>sans-serif</family>
+		<prefer>
+			<family>Noto Sans</family>
+			<family>Open Sans</family>
+			<family>Droid Sans</family>
+			<family>Roboto</family>
+			<family>IRANSansWeb</family>
+		</prefer>
+	</alias>
+	<alias>
+		<family>serif</family>
+		<prefer>
+			<family>Noto Serif</family>
+			<family>Droid Serif</family>
+			<family>Roboto Slab</family>
+			<family>IRANSansWeb</family>
+		</prefer>
+	</alias>
+	<alias>
+		<family>monospace</family>
+		<prefer>
+			<family>Noto Sans Mono</family>
+			<family>Inconsolata</family>
+			<family>Droid Sans Mono</family>
+			<family>Roboto Mono</family>
+			<family>IRANSansWeb</family>
+		</prefer>
+	</alias>
+```
+concept from arabic font configuration https://wiki.archlinux.org/title/Font_configuration/Examples#Arabic
+  
+# to be organized
 Powertop:
 Running sudo powertop --autotune can improve battery life. If you run sudo powertop and go to tunables tab, you would see some options marked as bad. powertop autotune fixes them, but needs to be run every time you reboot. To fix this, create a script in ~/.config/autostart or any other location of your choice, make it executable by running chmod +x /path/to/script and add it to login scripts in kde settings.
 
 https://raphtlw.medium.com/guide-to-installing-arch-on-zephyrus-g14-21b93d2e9f49
 
-
-persianfonts: https://wiki.archlinux.org/title/Font_configuration/Examples#Arabic
