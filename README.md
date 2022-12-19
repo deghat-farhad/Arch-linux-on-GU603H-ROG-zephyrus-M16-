@@ -143,6 +143,12 @@ and
 	</alias>
 ```
 concept from arabic font configuration https://wiki.archlinux.org/title/Font_configuration/Examples#Arabic
+
+#### Limit battery charge without `asusctl`
+to limit battery charge without installing `asusctl` edit `/etc/udev/rules.d/asus-battery-charge-threshold.rules` and add this line into it:
+```
+ACTION=="add", KERNEL=="asus-nb-wmi", RUN+="/bin/bash -c 'echo 60 > /sys/class/power_supply/BAT?/charge_control_end_threshold'"
+```
   
 # to be organized
 Powertop:
