@@ -82,7 +82,7 @@ As mentioned in https://wiki.archlinux.org/title/KDE#Blurry_icons_in_system_tray
 #### blurry telegram desktop in kde while using scaling
 edit `telegramdesktop.desktop`
 ```
-$ sudo nano /usr/share/applications/telegramdesktop.desktop
+$ sudo nano /usr/share/applications/org.telegram.desktop.desktop
 ```
 and change `Exec` line into
 ```
